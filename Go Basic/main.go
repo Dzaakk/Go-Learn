@@ -39,6 +39,6 @@ func main() {
 	copySlice := make([]string, len(newSlice), cap(newSlice))
 	copy(copySlice, newSlice)
 
-	fmt.Println(copySlice)
+	fmt.Println(copySlice)(copySlice)
 
 }
