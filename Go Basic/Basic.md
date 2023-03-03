@@ -1,0 +1,23 @@
+# Slice
+- Potongan dari array
+- Ukurannya bisa berubah
+- dapat mengakses sebagian atau seluruh data di array
+- Jika kita mengubah data pada array maka data pada slice akan ikut berubah
+	>iniSlice := []int{1, 2, 3, 4, 5}
+    
+	>iniArray := [...]int{1, 2, 3, 4, 5}
+  
+### Detail Tipe Data Slice
+- Memiliki 3 data
+  - *Pointer* --> Penunjuk data pertama di array pada slice
+  - *Length* --> Panjang dari slice
+  - *Capacity* --> Kapasitas dari slice, dimana *length* tidak boleh lebih dari *capacity* 
+
+| Syntax            | Keterangan |
+| -----------       | ----------- |
+|array[low:high]    |Membuat slice dari array dimulai dindex low sampai index sebelum high|
+|array[low:]        |Membuat slice dari array dimulai index low sampai index akhir di array|
+|array[:high]      |Membuat slice dari array dimulai index 0 sampai index sebelum high|
+|array[:]           |Membuat slice dari array dimulai index 0 sampai index akhir di array |
+![Contoh Slice](Pics/Slice.jpg)
+---
