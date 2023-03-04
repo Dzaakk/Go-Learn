@@ -3,6 +3,12 @@ package main
 import "fmt"
 
 func main() {
+
+	if length := len(name); length < 3 {
+		fmt.Println("Nama terlalu pendek")
+	} else {
+		fmt.Println("Nama sudah benar")
+	}
 	name := "nam"
 	switch length := len(name); length < 3 {
 	case true:
