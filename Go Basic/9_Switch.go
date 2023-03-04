@@ -3,13 +3,13 @@ package main
 import "fmt"
 
 func main() {
-	name := "yatno susanto"
-	// switch length := len(name); length < 3 {
-	// case true:
-	// 	fmt.Println("Nama terlalu pendek")
-	// case false:
-	// 	fmt.Println("Nama sudah benar")
-	// }
+	name := "nam"
+	switch length := len(name); length < 3 {
+	case true:
+		fmt.Println("Nama terlalu pendek")
+	case false:
+		fmt.Println("Nama sudah benar")
+	}
 
 	lengthName := len(name)
 	switch {
