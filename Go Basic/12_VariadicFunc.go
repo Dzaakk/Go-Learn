@@ -22,3 +22,4 @@ func main() {
 	total = SumAll(slice...)
 	fmt.Println(total)
 }
+

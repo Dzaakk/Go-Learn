@@ -21,3 +21,12 @@
 |array[:]           |Membuat slice dari array dimulai index 0 sampai index akhir di array |
 ![Contoh Slice](Pics/Slice.jpg)
 ---
+
+# Variadic Function
+- Parameter berada di posisi akhir, memiliki kemampuan dijadikan sebuah varargs
+- Varargs artinya data bisa menerima lebih dari satu input, atau dianggap semacam array, contohnya
+  - > (number ...int)
+  - > sumAll(slice...)
+- Perbedaan parameter biasa dengan tipe data Array
+  - Jika parameter Array, kita wajib membuat array terlebih dahulu, sebelum mengirimkan ke function
+  - jika parameter menggunakan varargs, kita bisa langsung mengirim datanya, jika lebih dari satu, cukup gunakan tanda koma
