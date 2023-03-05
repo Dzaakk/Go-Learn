@@ -11,3 +11,4 @@ func main() {
 	fmt.Println(result)
 	fmt.Println(getGoodBye("toto"))	
 }
+
