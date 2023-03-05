@@ -8,7 +8,7 @@ func sayHelloWithFilter(name string, filter func(string) string) {
 	nameFiltered := filter(name)
 	fmt.Println("Hello", nameFiltered)
 }
-func sayGoodbyeFIlter(name string, filter Filter){
+func sayGoodbyeFIlter(name string, filter Filter) {
 	NameFilter := filter(name)
 	fmt.Println("Goodbye", NameFilter)
 }
