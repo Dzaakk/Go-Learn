@@ -71,3 +71,7 @@
 - Biasanya dalam pemrograman beriorientasi objek, ada satu data parent di puncak yang bisa dianggap sebagai semua implementasi data yang ada di bahasa pemrograman tersebut
 - Contoh di java ada java.lang.Object
 - Untuk itu golang menggunakan interface kosong
+---
+# Type Assertions
+- Kemampuan merubah tipe data menjadai tipe data yang diinginkan
+- sering digunakan ketika kita bertemu dengan data interface kosong
