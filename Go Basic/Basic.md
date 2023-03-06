@@ -46,3 +46,14 @@
 - Fungsi yang digunakan untuk menagkap data panic
 - Dengan recover proses panic akan terhenti, sehingga program akan tetap berjalan
 - Fungsi Recover yang benar ditambahkan pada defer function
+# Struct
+- disimpan dalam field
+- sederhananya struct adalah kumpulan dari field
+- Struct biasanya representasi data dalam program aplikasi yang kita buat
+- Kita bisa membuat data/object dari struct yang kita buat 
+  - > var eko customer
+
+## Struct Method
+- bisa digunakan sebagai parameter untuk function
+- Jika ingin menambahkan method ke dalam structs, struct akan terlihat seakan akan memiliki sebuah function
+- method adalah function
