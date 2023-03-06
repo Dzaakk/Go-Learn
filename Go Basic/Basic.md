@@ -30,3 +30,10 @@
 - Perbedaan parameter biasa dengan tipe data Array
   - Jika parameter Array, kita wajib membuat array terlebih dahulu, sebelum mengirimkan ke function
   - jika parameter menggunakan varargs, kita bisa langsung mengirim datanya, jika lebih dari satu, cukup gunakan tanda koma
+  ---
+# Closures
+  - Closure adalah kemampuan sebuah function berinteraksi dengan data-data di sekitranya dalam scope yang sama
+  - Pastikan buat variabel baru untuk cek apakah nama variabel tersebut sudah digunakan di atas 
+---
+# Defer Function
+  - Berfungsi untuk menjalankan suatu function meskipun function sebelumnya terjadi error 
