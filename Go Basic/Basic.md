@@ -36,4 +36,13 @@
   - Pastikan buat variabel baru untuk cek apakah nama variabel tersebut sudah digunakan di atas 
 ---
 # Defer Function
-  - Berfungsi untuk menjalankan suatu function meskipun function sebelumnya terjadi error 
+- Berfungsi untuk menjalankan suatu function meskipun function sebelumnya terjadi error 
+---
+# Panic Function
+- Fungsi yang digunakan untuk menghentikan program
+- dipanggil ketika terjadi error pada saat program kita berjalan
+- Ketika dipanggil program akan terhenti, namun defer function akan tetap dieksekusi
+# Recover Function
+- Fungsi yang digunakan untuk menagkap data panic
+- Dengan recover proses panic akan terhenti, sehingga program akan tetap berjalan
+- Fungsi Recover yang benar ditambahkan pada defer function
