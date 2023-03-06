@@ -66,7 +66,6 @@
 - Sehingga kita tidak perllu mengimplementasikan interface secara manual
 ## Interface kosong
 - Semua tipe data bisa digunakan atau diterima
-  - >} <
 - Interface kosong adalah interface yang tidak memiliki deklarasi method satupun, hal ini membuat secara otomatis semua tipe data akan menjadi implementasinya
 - Go-Lang bukan bahasa pemrograman yang berorientasi objek
 - Biasanya dalam pemrograman beriorientasi objek, ada satu data parent di puncak yang bisa dianggap sebagai semua implementasi data yang ada di bahasa pemrograman tersebut
