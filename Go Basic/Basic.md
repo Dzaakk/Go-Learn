@@ -57,3 +57,11 @@
 - bisa digunakan sebagai parameter untuk function
 - Jika ingin menambahkan method ke dalam structs, struct akan terlihat seakan akan memiliki sebuah function
 - method adalah function
+---
+# Interface
+- Interface adalah tipe data Abstract, dia tidak memiliki implementasi langsung
+- Sebuah interface berisikan definisi-definisi method
+- Biasanya Interface digunakan sebagia kontrak
+- Setiap tipe data yang sesuai dengan kontrak interface, secara otomatis dianggap sebagai interface tersebut
+- Sehingga kita tidak perllu mengimplementasikan interface secara manual
+- 
