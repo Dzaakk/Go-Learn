@@ -12,7 +12,3 @@ func main() {
 
 	runApp()
 }
-func runApp(){
-	defer logging()
-	fmt.Println("Run App")
-}
