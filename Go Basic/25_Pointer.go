@@ -41,7 +41,7 @@ func main() {
 		ChangeCountry(&alamat)
 		fmt.Println(alamat)
 
-	tono := Man{"Tono"}
-	tono.Married()
-	fmt.Println(tono)
+	toni := Man{"Toni"}
+	toni.Married()
+	fmt.Println(toni)
 }
