@@ -77,4 +77,8 @@
 - sering digunakan ketika kita bertemu dengan data interface kosong
 ---
 # Pointerdi 
-- Kemampuan membuat reference ke lokasi data di memory yang sama, tanpa menduplikasi data yang sudah ada, dengan ini kita bisa membuat pass by reference 
+- Kemampuan membuat reference ke lokasi data di memory yang sama, tanpa menduplikasi data yang sudah ada, dengan ini kita bisa membuat pass by reference
+---
+# GOPATH
+- GOPATH adalah environment variable yang berisikan lokasi tempat kita menyimpan project dan library Go-Lang
+- Wajib ketika mulai membuat aplikasi lebih dari satu file atau menggunakan library dari luar
