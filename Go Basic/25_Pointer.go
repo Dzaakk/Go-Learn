@@ -5,7 +5,18 @@ import "fmt"
 type Address struct {
 	City, Province, Country string
 }
-
+//tambahkan * agar jadi pointer pada suatu parameter 
+func ChangeCountry(adress *Address){
+	adress.Country = "Indonesia"
+}
+type Man struct{
+	Name string
+}
+//contoh Pointer di Method/ struct func
+//gunakan operator * untuk menjadikan struct sebagai pointer
+func(man *Man) Married(){
+	man.Name = "Mr." +man.Name
+}
 func main() {
 	 address1 := Address{"Subang", "Jawa Barat", "Indonesia"}
 	 //pass by reference sehingga address2 menjadi pointer adress1
@@ -20,4 +31,17 @@ func main() {
 	var address3 *Address =new(Address)
 	address3.City = "Jakarta"
 	fmt.Println(address3)
+
+	var alamat = Address{
+		City: "Subang",
+		Province: "Jawa Barat",
+		Country: "",
+		}	 
+		//gunakan & agar jadi pointer
+		ChangeCountry(&alamat)
+		fmt.Println(alamat)
+
+	tono := Man{"Tono"}
+	tono.Married()
+	fmt.Println(tono)
 }
