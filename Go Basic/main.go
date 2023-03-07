@@ -2,25 +2,22 @@ package main
 
 import "fmt"
 
-func random() interface{} {
-	return "ups"
-}
-func RandomWithSwitch() interface{} {
-	return 10
+type Address struct {
+	City, Province, Country string
 }
 
 func main() {
-	var result interface{} = random()
-	var resultString string = result.(string)
-	fmt.Println(resultString)
-
-	var resultRandom interface{} = RandomWithSwitch()
-	switch RandomReturn := resultRandom.(type) {
-	case string:
-		fmt.Println("Return is", RandomReturn, "with type string")
-	case int:
-		fmt.Println("Return is", RandomReturn, "with type int")
-	default:
-		fmt.Println("Unkonw Type")
-	}
+	 address1 := Address{"Subang", "Jawa Barat", "Indonesia"}
+	 //pass by reference sehingga address2 menjadi pointer adress1
+	 address2 := &address1
+	 address2.City = "Bandung"
+	//memakai bintang agar pada memory mana pun akan berubah sesuai data yang di sini
+	 *address2 = Address{"Malang", "Jawa Timur", "Indonesia"}
+	 
+	 fmt.Println(address1)
+	 fmt.Println(address2)
+	//function new hanya mengembalikan pointer ke data kosongg
+	var address3 *Address =new(Address)
+	address3.City = "Jakarta"
+	fmt.Println(address3)
 }

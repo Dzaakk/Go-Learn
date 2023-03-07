@@ -75,3 +75,6 @@
 # Type Assertions
 - Kemampuan merubah tipe data menjadai tipe data yang diinginkan
 - sering digunakan ketika kita bertemu dengan data interface kosong
+---
+# Pointerdi 
+- Kemampuan membuat reference ke lokasi data di memory yang sama, tanpa menduplikasi data yang sudah ada, dengan ini kita bisa membuat pass by reference 
