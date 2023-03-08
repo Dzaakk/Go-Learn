@@ -20,7 +20,11 @@ func main() {
 		fmt.Println(err.Error())
 	}
 
+	valueInt, err := strconv.Atoi("2000000") //langsung tanpa harus mendeskripsikan jumlah bytenya
+	fmt.Println(valueInt)
+	
 //integer to string
 value := strconv.FormatInt(10000000, 2)
 fmt.Println(value) //print jadi biner
+
 }
