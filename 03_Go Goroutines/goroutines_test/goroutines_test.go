@@ -3,6 +3,7 @@ package goroutines_test
 import (
 	"fmt"
 	"testing"
+	"time"
 )
 
 func Hello() {
@@ -10,7 +11,8 @@ func Hello() {
 }
 
 func TestCreateGoroutine(t *testing.T) {
-	Hello()
+	go Hello()
 	fmt.Println("Ups")
 	
+	time.Sleep(1* time.Second)
 }
