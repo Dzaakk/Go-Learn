@@ -12,7 +12,7 @@ func TestCreateChannel(t *testing.T) {
 
 	go func() {
 		time.Sleep(2 * time.Second)
-		channel <- "Data yang dimasukan"
+		channel <- "Data dimasukan ke channel"
 		fmt.Println("Selesai Mengirim Data ke Channel")
 	}()
 
@@ -36,4 +36,25 @@ func TestChannelAsParameter(t *testing.T) {
 	data := <-channel
 	fmt.Println(data)
 	time.Sleep(5 * time.Second)
+}
+
+//Channel hanya mengirim/memasukan data
+func OnlyIn(channel chan<- string){
+	time.Sleep(2* time.Second)
+	channel <- "data dimasukan ke channel"
+}
+//Channel hanya menerima data
+func OnlyOut(channel <-chan string){
+	data := <-channel
+	fmt.Println(data)
+}
+
+func TestInOutChannel(t *testing.T) {
+ channel := make(chan string)
+
+ go OnlyIn(channel)
+ go OnlyOut(channel)
+
+ time.Sleep(3 * time.Second)
+ close(channel)
 }
