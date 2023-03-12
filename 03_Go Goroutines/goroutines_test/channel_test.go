@@ -2,6 +2,7 @@ package goroutines_test
 
 import (
 	"fmt"
+	"strconv"
 	"testing"
 	"time"
 )
@@ -39,42 +40,60 @@ func TestChannelAsParameter(t *testing.T) {
 }
 
 //Channel hanya mengirim/memasukan data
-func OnlyIn(channel chan<- string){
-	time.Sleep(2* time.Second)
+func OnlyIn(channel chan<- string) {
+	time.Sleep(2 * time.Second)
 	channel <- "data dimasukan ke channel"
 }
+
 //Channel hanya menerima data
-func OnlyOut(channel <-chan string){
+func OnlyOut(channel <-chan string) {
 	data := <-channel
 	fmt.Println(data)
 }
 
 func TestInOutChannel(t *testing.T) {
- channel := make(chan string)
+	channel := make(chan string)
 
- go OnlyIn(channel)
- go OnlyOut(channel)
+	go OnlyIn(channel)
+	go OnlyOut(channel)
 
- time.Sleep(3 * time.Second)
- close(channel)
+	time.Sleep(3 * time.Second)
+	close(channel)
 }
 
-//buffered Channel
+//Buffered Channel
 func TestBufferedChannel(t *testing.T) {
 	channel := make(chan string, 3) //3 adalah panjang buffernya
 	defer close(channel)
 
-	go func(){
+	go func() {
 		channel <- "data1"
 		channel <- "data2"
 		channel <- "data3"
 	}()
-	go func ()  {
-		fmt.Println(<- channel)
-		fmt.Println(<- channel)
-		fmt.Println(<- channel)
+	go func() {
+		fmt.Println(<-channel)
+		fmt.Println(<-channel)
+		fmt.Println(<-channel)
 	}()
 
 	time.Sleep(2 * time.Second)
+	fmt.Println("Selesai")
+}
+
+//Range Channel
+func TestRangeChannel(t *testing.T) {
+	channel := make(chan string)
+
+	go func() {
+		for i := 0; i < 10; i++ {
+			channel <- "Data ke-" + strconv.Itoa(i)
+		}
+		close(channel)
+	}()
+
+	for data := range channel {
+		fmt.Println("Menerima", data)
+	}
 	fmt.Println("Selesai")
 }
