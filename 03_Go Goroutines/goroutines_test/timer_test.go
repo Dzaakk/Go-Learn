@@ -15,6 +15,7 @@ func TestTimer(t *testing.T) {
 	time := <-timer.C
 	fmt.Println(time)
 }
+
 //Auto
 func TestAfter(t *testing.T) {
 	channel := time.After(5 * time.Second)
@@ -23,12 +24,13 @@ func TestAfter(t *testing.T) {
 	time := <-channel
 	fmt.Println(time)
 }
+
 //menjalankan fungsi setelah timernya
 func TestAfterFunc(t *testing.T) {
 	group := sync.WaitGroup{}
 	group.Add(1)
 
-	time.AfterFunc(5 * time.Second, func ()  {
+	time.AfterFunc(5*time.Second, func() {
 		fmt.Println(time.Now())
 		group.Done()
 	})
