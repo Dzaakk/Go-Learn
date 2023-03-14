@@ -112,12 +112,33 @@ func TestContextWithCancelNotLeak(t *testing.T) {
 	fmt.Println("Total Goroutine Setelah Proses Selesai : ", runtime.NumGoroutine())
 }
 
+//timeout
 func TestContextWithTimeOut(t *testing.T) {
 	fmt.Println("Total Goroutine Awal : ", runtime.NumGoroutine())
 
 	parent := context.Background()
 	ctx, cancel := context.WithTimeout(parent, 5*time.Second)
 	defer cancel()
+
+	destination := CreateCounterNotLeak(ctx)
+	fmt.Println("Total Goroutine Ketika Counter Berjalan : ", runtime.NumGoroutine())
+
+	for n := range destination {
+		fmt.Println("counter", n)
+	}
+
+	time.Sleep(2 * time.Second)
+	fmt.Println("Total Goroutine Setelah Proses Selesai : ", runtime.NumGoroutine())
+}
+
+//deadline (waktunya fix)
+func TestContextWithDeadline(t *testing.T) {
+	fmt.Println("Total Goroutine Awal : ", runtime.NumGoroutine())
+
+	parent := context.Background()
+	ctx, cancel := context.WithDeadline(parent, time.Now().Add(5*time.Second))
+	defer cancel()
+	// dijalankan dari waktu saat ini sampai dengan 5 detik kedepan
 
 	destination := CreateCounterNotLeak(ctx)
 	fmt.Println("Total Goroutine Ketika Counter Berjalan : ", runtime.NumGoroutine())
