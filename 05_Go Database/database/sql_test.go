@@ -48,6 +48,7 @@ func TestQuerySQL(t *testing.T) {
 	}
 }
 
+//column
 func TestQuerySQLComplex(t *testing.T) {
 	db := GetConnection()
 	defer db.Close()
