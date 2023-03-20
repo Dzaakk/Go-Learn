@@ -220,3 +220,39 @@ func TestPrepareStatmenet(t *testing.T) {
 		fmt.Println("Comment Id ", id)
 	}
 }
+
+//Database Transaction
+func TestTransacation(t *testing.T) {
+	db := GetConnection()
+	defer db.Close()
+
+	ctx := context.Background()
+	tx, err := db.Begin()
+	if err != nil {
+		panic(err)
+	}
+	InputScript := "INSERT INTO comments(email, comment) VALUES(?, ?)"
+	//do transaction
+	for i := 0; i < 10; i++ {
+		email := "bambang" + strconv.Itoa(i) + "@gmail.com"
+		comment := "Komentar ke " + strconv.Itoa(i)
+
+		result, err := tx.ExecContext(ctx, InputScript, email, comment)
+		if err != nil {
+			panic(err)
+		}
+
+		id, err := result.LastInsertId()
+		if err != nil {
+			panic(err)
+		}
+
+		fmt.Println("Comment Id ", id)
+	}
+
+	err = tx.Commit()
+	// err = tx.Rollback()
+	if err != nil {
+		panic(err)
+	}
+}
