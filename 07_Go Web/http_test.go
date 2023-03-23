@@ -15,7 +15,7 @@ func HelloHandler(w http.ResponseWriter, r *http.Request) {
 func TestHttp(t *testing.T) {
 	request := httptest.NewRequest(http.MethodGet, "http://localhost:8080/helllo", nil)
 	recorder := httptest.NewRecorder()
-``
+
 	HelloHandler(recorder, request)
 	response := recorder.Result()
 	body, _ := io.ReadAll(response.Body)
