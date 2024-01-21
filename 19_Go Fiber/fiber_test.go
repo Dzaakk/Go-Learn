@@ -1,17 +1,21 @@
 package main
 
 import (
+	"bytes"
+	_ "embed"
 	"github.com/gofiber/fiber/v2"
 	"github.com/stretchr/testify/assert"
 	"io"
+	"mime/multipart"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
 )
 
+var app = fiber.New()
+
 func TestRoutingHello(t *testing.T) {
-	app := fiber.New()
 	app.Get("/", func(ctx *fiber.Ctx) error {
 		return ctx.SendString("Hello")
 	})
@@ -28,7 +32,6 @@ func TestRoutingHello(t *testing.T) {
 }
 
 func TestCtx(t *testing.T) {
-	app := fiber.New()
 	app.Get("/hello", func(ctx *fiber.Ctx) error {
 		name := ctx.Query("name", "Guest")
 		return ctx.SendString("Hello " + name)
@@ -54,7 +57,6 @@ func TestCtx(t *testing.T) {
 }
 
 func TestHttpRequest(t *testing.T) {
-	app := fiber.New()
 	app.Get("/request", func(ctx *fiber.Ctx) error {
 		first := ctx.Get("firstname")
 		last := ctx.Cookies("lastname")
@@ -74,7 +76,6 @@ func TestHttpRequest(t *testing.T) {
 }
 
 func TestRouteParameter(t *testing.T) {
-	app := fiber.New()
 	app.Get("/users/:userId/orders/:orderId", func(ctx *fiber.Ctx) error {
 		userId := ctx.Params("userId")
 		orderId := ctx.Params("orderId")
@@ -92,7 +93,6 @@ func TestRouteParameter(t *testing.T) {
 }
 
 func TestFormRequest(t *testing.T) {
-	app := fiber.New()
 	app.Post("/hello", func(ctx *fiber.Ctx) error {
 		name := ctx.FormValue("name")
 		return ctx.SendString("Hello " + name)
@@ -108,4 +108,40 @@ func TestFormRequest(t *testing.T) {
 	bytes, err := io.ReadAll(response.Body)
 	assert.Nil(t, err)
 	assert.Equal(t, "Hello dz", string(bytes))
+}
+
+//go:embed source/contoh.txt
+var contohFile []byte
+
+func TestFormUpload(t *testing.T) {
+	app.Post("/upload", func(ctx *fiber.Ctx) error {
+		file, err := ctx.FormFile("file")
+		if err != nil {
+			return err
+		}
+
+		err = ctx.SaveFile(file, "./target/"+file.Filename)
+		if err != nil {
+			return err
+		}
+
+		return ctx.SendString("Upload Success")
+	})
+
+	body := new(bytes.Buffer)
+	writer := multipart.NewWriter(body)
+	file, err := writer.CreateFormFile("file", "contoh.txt")
+	assert.Nil(t, err)
+	file.Write(contohFile)
+	writer.Close()
+
+	request := httptest.NewRequest("POST", "/upload", body)
+	request.Header.Set("Content-Type", writer.FormDataContentType())
+	response, err := app.Test(request)
+	assert.Nil(t, err)
+	assert.Equal(t, 200, response.StatusCode)
+
+	bytes, err := io.ReadAll(response.Body)
+	assert.Nil(t, err)
+	assert.Equal(t, "Upload Success", string(bytes))
 }
