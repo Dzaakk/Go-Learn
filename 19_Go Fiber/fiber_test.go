@@ -278,3 +278,25 @@ func TestDownloadFile(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, "this is sample file for upload", string(bytes))
 }
+func TestRoutingGroup(t *testing.T) {
+	hello := func(ctx *fiber.Ctx) error {
+		return ctx.SendString("Hello")
+	}
+
+	api := app.Group("/api")
+	api.Get("/hello", hello)
+	api.Get("/world", hello)
+
+	web := app.Group("/web")
+	web.Get("/hello", hello)
+	web.Get("/world", hello)
+
+	request := httptest.NewRequest("GET", "/api/hello", nil)
+	response, err := app.Test(request)
+	assert.Nil(t, err)
+	assert.Equal(t, 200, response.StatusCode)
+
+	bytes, err := io.ReadAll(response.Body)
+	assert.Nil(t, err)
+	assert.Equal(t, "Hello", string(bytes))
+}
