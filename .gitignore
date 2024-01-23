@@ -5,3 +5,4 @@
 **/*.yaml
 .gitignore
 **/*.txt
+**/*.handlebars;hbs;mustache
