@@ -18,6 +18,12 @@ func main() {
 		return ctx.SendString("Hello!")
 	})
 
+	app.Use("/api", func(ctx *fiber.Ctx) error {
+		fmt.Println("MIDDLEWARE BEFORE PROCESS")
+		err := ctx.Next()
+		fmt.Println("MIDDLEWARE AFTER PROCESS")
+		return err
+	})
 	if fiber.IsChild() {
 		fmt.Println("This is Child Process")
 	} else {
