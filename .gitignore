@@ -5,4 +5,5 @@
 **/*.yaml
 .gitignore
 **/*.txt
-**/*.handlebars;hbs;mustache
+**/*.handlebars;hbs;mustache;
+**/*.env
