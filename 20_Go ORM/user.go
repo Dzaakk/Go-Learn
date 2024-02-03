@@ -4,10 +4,10 @@ import "time"
 
 type User struct {
 	ID          string    `gorm:"primary_key;column:id;<-:create"` //create only
-	password    string    `gorm:"column:password"`
+	Password    string    `gorm:"column:password"`
 	Name        Name      `gorm:"embedded"` //create and update
 	CreatedAt   time.Time `gorm:"column:created_at;autoCreateTime;<-:create"`
-	UpdatedAt   time.Time `gorm:"column:name;autoCreateTime;autoUpdateTime"`
+	UpdatedAt   time.Time `gorm:"column:updated_at;autoCreateTime;autoUpdateTime"`
 	Information string    `gorm:"-"` //no field on db so it will ignore this
 }
 
