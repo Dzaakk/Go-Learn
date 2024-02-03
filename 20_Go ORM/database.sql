@@ -27,3 +27,7 @@ alter table users
 
 alter table users
     add column last_name varchar(100) null;
+
+DELETE
+FROM users
+WHERE id BETWEEN '10' AND '20';

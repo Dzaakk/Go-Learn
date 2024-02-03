@@ -6,6 +6,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"os"
+	"strconv"
 	"testing"
 )
 
@@ -93,4 +94,51 @@ func TestScanRow(t *testing.T) {
 		assert.Nil(t, err)
 	}
 	assert.Equal(t, 2, len(samples))
+}
+
+func TestCreateUser(t *testing.T) {
+	user := User{
+		ID:       "1",
+		Password: "rhs",
+		Name: Name{
+			FirstName:  "Bambang",
+			MiddleName: "Pamungkas",
+			LastName:   "20",
+		},
+		Information: "ignore",
+	}
+	response := db.Create(&user)
+	assert.Nil(t, response.Error)
+	assert.Equal(t, int64(1), response.RowsAffected)
+}
+
+func TestBatchInsert(t *testing.T) {
+	var users []User
+	for i := 2; i < 10; i++ {
+		users = append(users, User{
+			ID:       strconv.Itoa(i),
+			Password: "rhs",
+			Name: Name{
+				FirstName: "User " + strconv.Itoa(i),
+			},
+		})
+	}
+	response := db.Create(&users)
+	assert.Nil(t, response.Error)
+	assert.Equal(t, int64(8), response.RowsAffected)
+}
+func TestCreateInBatch(t *testing.T) {
+	var users []User
+	for i := 10; i < 20; i++ {
+		users = append(users, User{
+			ID:       strconv.Itoa(i),
+			Password: "rhs",
+			Name: Name{
+				FirstName: "User " + strconv.Itoa(i),
+			},
+		})
+	}
+	response := db.CreateInBatches(&users, 10)
+	assert.Nil(t, response.Error)
+	assert.Equal(t, int64(10), response.RowsAffected)
 }
