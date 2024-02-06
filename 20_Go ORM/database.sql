@@ -31,3 +31,15 @@ alter table users
 DELETE
 FROM users
 WHERE id BETWEEN '10' AND '20';
+
+create table user_logs
+(
+    id         serial,
+    user_id    varchar(100) not null,
+    action     varchar(100) not null,
+    created_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    primary key (id)
+);
+select *
+from user_logs;
