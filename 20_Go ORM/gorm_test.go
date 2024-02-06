@@ -313,3 +313,30 @@ func TestQueryNonModel(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, 23, len(users))
 }
+func TestUpdate(t *testing.T) {
+	user := User{}
+	err := db.Take(&user, "id = ?", "1").Error
+	assert.Nil(t, err)
+
+	user.Name.FirstName = "User 1"
+	user.Name.MiddleName = ""
+	user.Name.LastName = ""
+
+	err = db.Save(&user).Error
+	assert.Nil(t, err)
+}
+func TestUpdateSelectedColumns(t *testing.T) {
+	err := db.Model(&User{}).Where("id = ?", "1").Updates(map[string]interface{}{
+		"middle_name": "",
+		"last_name":   "buba",
+	}).Error
+	assert.Nil(t, err)
+
+	err = db.Model(&User{}).Where("id = ?", "3").Update("password", "bukan rhs").Error
+	assert.Nil(t, err)
+
+	err = db.Where("id = ?", "4").Updates(User{
+		Information: "HAHAHA",
+	}).Error
+	assert.Nil(t, err)
+}
