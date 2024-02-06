@@ -98,7 +98,6 @@ func TestScanRow(t *testing.T) {
 	}
 	assert.Equal(t, 2, len(samples))
 }
-
 func TestCreateUser(t *testing.T) {
 	user := User{
 		ID:       "1",
@@ -114,7 +113,6 @@ func TestCreateUser(t *testing.T) {
 	assert.Nil(t, response.Error)
 	assert.Equal(t, int64(1), response.RowsAffected)
 }
-
 func TestBatchInsert(t *testing.T) {
 	var users []User
 	for i := 2; i < 10; i++ {
@@ -229,4 +227,76 @@ func TestQueryAllObject(t *testing.T) {
 	err := db.Find(&users, "id in ?", []string{"1,", "3", "4", "5"}).Error
 	assert.Nil(t, err)
 	assert.Equal(t, 4, len(users))
+}
+
+func TestQueryCondition(t *testing.T) {
+	var users []User
+	err := db.
+		Where("first_name like ?", "%User%").
+		Where("password = ?", "rhs").
+		Find(&users).Error
+	assert.Nil(t, err)
+	assert.Equal(t, 22, len(users))
+}
+func TestOperator(t *testing.T) {
+	var users []User
+	err := db.
+		Where("first_name like ?", "%User%").
+		Or("password = ?", "rhs").
+		Find(&users).Error
+	assert.Nil(t, err)
+	assert.Equal(t, 23, len(users))
+}
+func TestNotOperator(t *testing.T) {
+	var users []User
+	err := db.
+		Not("first_name like ?", "%User%").
+		Where("password = ?", "rhs").
+		Find(&users).Error
+	assert.Nil(t, err)
+	assert.Equal(t, 1, len(users))
+}
+func TestSelectFields(t *testing.T) {
+	var users []User
+	err := db.
+		Select("id", "first_name").
+		Find(&users).Error
+	assert.Nil(t, err)
+	for _, user := range users {
+		assert.NotNil(t, user.ID)
+		assert.NotEqual(t, "", user.Name.FirstName)
+	}
+	assert.Equal(t, 23, len(users))
+}
+func TestStructCondition(t *testing.T) {
+	userCondition := User{
+		Name: Name{
+			FirstName: "User 5",
+		},
+		Password: "rhs",
+	}
+
+	var users []User
+	err := db.Where(userCondition).Find(&users).Error
+	assert.Nil(t, err)
+	assert.Equal(t, 1, len(users))
+}
+func TestMapCondition(t *testing.T) {
+	mapCondition := map[string]interface{}{
+		"middle_name": "",
+		"last_name":   "",
+	}
+	var users []User
+	err := db.Where(mapCondition).Find(&users).Error
+	assert.Nil(t, err)
+	assert.Equal(t, 22, len(users))
+}
+func TestOrderLimitOffset(t *testing.T) {
+	var users []User
+	err := db.Order("id asc, first_name desc").
+		Limit(5).
+		Offset(5).
+		Find(&users).Error
+	assert.Nil(t, err)
+	assert.Equal(t, 5, len(users))
 }
