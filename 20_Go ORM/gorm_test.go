@@ -405,3 +405,36 @@ func TestDelete(t *testing.T) {
 	err = db.Where("id = ?", "10").Delete(&User{}).Error
 	assert.Nil(t, err)
 }
+func TestSoftDelete(t *testing.T) {
+	todo := Todo{
+		UserId:      "2",
+		Title:       "Todo 2",
+		Description: "Desc 2",
+	}
+
+	err := db.Create(&todo).Error
+	assert.Nil(t, err)
+
+	err = db.Delete(&todo).Error
+	assert.Nil(t, err)
+	assert.NotNil(t, todo.DeletedAt)
+
+	var todos []Todo
+	err = db.Find(&todos).Error
+	assert.Nil(t, err)
+	assert.Equal(t, 0, len(todos))
+}
+
+func TestUnscoped(t *testing.T) {
+	var todo Todo
+	err := db.Unscoped().First(&todo, "id = ?", 2).Error
+	assert.Nil(t, err)
+
+	err = db.Unscoped().Delete(&todo).Error
+	assert.Nil(t, err)
+
+	var todos []Todo
+	err = db.Find(&todos).Error
+	assert.Nil(t, err)
+
+}

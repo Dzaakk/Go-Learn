@@ -59,3 +59,18 @@ ALTER TABLE user_logs
 select *
 from information_schema.columns
 where table_name = 'user_logs';
+
+create table todos
+(
+    id          serial,
+    user_id     varchar(100) not null,
+    title       varchar(100) not null,
+    description text         null,
+    created_at  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deleted_at  timestamp    null,
+    primary key (id)
+);
+drop table todos;
+select *
+from todos;
