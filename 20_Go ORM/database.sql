@@ -43,3 +43,19 @@ create table user_logs
 );
 select *
 from user_logs;
+
+delete
+from user_logs
+where action = 'Test';
+
+-- Remove default value
+ALTER TABLE user_logs
+    ALTER COLUMN updated_at DROP DEFAULT;
+
+ALTER TABLE user_logs
+    ALTER COLUMN updated_at TYPE bigint
+        USING EXTRACT(EPOCH FROM updated_at)::bigint;
+
+select *
+from information_schema.columns
+where table_name = 'user_logs';
