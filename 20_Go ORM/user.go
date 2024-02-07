@@ -37,13 +37,10 @@ func (l *UserLog) TableName() string {
 }
 
 type Todo struct {
-	ID          int64          `gorm:"primary_key;column:id;autoIncrement"` //create only
-	UserId      string         `gorm:"column:user_id"`
-	Title       string         `gorm:"column:title"`
-	Description string         `gorm:"column:description"`
-	CreatedAt   time.Time      `gorm:"column:created_at;autoCreateTime"`
-	UpdatedAt   time.Time      `gorm:"column:updated_at;autoCreateTime;autoUpdateTime"`
-	DeletedAt   gorm.DeletedAt `gorm:"column:deleted_at"`
+	gorm.Model
+	UserId      string `gorm:"column:user_id"`
+	Title       string `gorm:"column:title"`
+	Description string `gorm:"column:description"`
 }
 
 func (t *Todo) TableName() string {

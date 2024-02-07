@@ -407,9 +407,9 @@ func TestDelete(t *testing.T) {
 }
 func TestSoftDelete(t *testing.T) {
 	todo := Todo{
-		UserId:      "2",
-		Title:       "Todo 2",
-		Description: "Desc 2",
+		UserId:      "3",
+		Title:       "Todo 3",
+		Description: "Desc 3",
 	}
 
 	err := db.Create(&todo).Error
