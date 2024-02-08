@@ -477,3 +477,37 @@ func TestRetrieveRelationJoin(t *testing.T) {
 	assert.Equal(t, "1", user.ID)
 	assert.Equal(t, "1", user.Wallet.ID)
 }
+func TestAutoCreateUpdate(t *testing.T) {
+	user := User{
+		ID:       "34",
+		Password: "rhs",
+		Name: Name{
+			FirstName: "User 34",
+		},
+		Wallet: Wallet{
+			ID:      "20",
+			UserId:  "34",
+			Balance: 200000,
+		},
+	}
+
+	err := db.Create(&user).Error
+	assert.Nil(t, err)
+}
+func TestSkipAutoCreateUpdate(t *testing.T) {
+	user := User{
+		ID:       "35",
+		Password: "rhs",
+		Name: Name{
+			FirstName: "User 35",
+		},
+		Wallet: Wallet{
+			ID:      "21",
+			UserId:  "35",
+			Balance: 200000,
+		},
+	}
+
+	err := db.Omit(clause.Associations).Create(&user).Error
+	assert.Nil(t, err)
+}
