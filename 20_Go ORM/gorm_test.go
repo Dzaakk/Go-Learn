@@ -424,7 +424,6 @@ func TestSoftDelete(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, 0, len(todos))
 }
-
 func TestUnscoped(t *testing.T) {
 	var todo Todo
 	err := db.Unscoped().First(&todo, "id = ?", 2).Error
@@ -436,5 +435,20 @@ func TestUnscoped(t *testing.T) {
 	var todos []Todo
 	err = db.Find(&todos).Error
 	assert.Nil(t, err)
+}
 
+func TestLock(t *testing.T) {
+	err := db.Transaction(func(tx *gorm.DB) error {
+		var user User
+		err := tx.Clauses(clause.Locking{Strength: "UPDATE"}).Take(&user, "id = ?", "1").Error
+		if err != nil {
+			return err
+		}
+
+		user.Name.FirstName = "sukuna"
+		user.Name.LastName = "bro"
+		err = tx.Save(&user).Error
+		return err
+	})
+	assert.Nil(t, err)
 }
