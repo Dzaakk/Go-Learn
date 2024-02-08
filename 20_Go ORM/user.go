@@ -12,6 +12,7 @@ type User struct {
 	CreatedAt   time.Time `gorm:"column:created_at;autoCreateTime;<-:create"`
 	UpdatedAt   time.Time `gorm:"column:updated_at;autoCreateTime;autoUpdateTime"`
 	Information string    `gorm:"-"` //no field on db so it will ignore this
+	Wallet      Wallet    `gorm:"foreignKey:user_id;references:id"`
 }
 
 func (u *User) TableName() string {
@@ -45,4 +46,16 @@ type Todo struct {
 
 func (t *Todo) TableName() string {
 	return "todos"
+}
+
+type Wallet struct {
+	ID        string    `gorm:"primary_key;column:id;<-:create;autoIncrement"` //create only
+	UserId    string    `gorm:"column:user_id"`
+	Balance   int64     `gorm:"column:balance"`
+	CreatedAt time.Time `gorm:"column:created_at;autoCreateTime;<-:create"`
+	UpdatedAt time.Time `gorm:"column:updated_at;autoCreateTime;autoUpdateTime"`
+}
+
+func (w *Wallet) TableName() string {
+	return "wallets"
 }

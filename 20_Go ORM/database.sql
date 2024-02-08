@@ -74,3 +74,16 @@ create table todos
 drop table todos;
 select *
 from todos;
+
+create table wallets
+(
+    id         VARCHAR(100) NOT NULL,
+    user_id    VARCHAR(100) NOT NULL,
+    balance    bigint       NOT NULL,
+    created_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    foreign key (user_id) references users (id)
+);
+select *
+from wallets;
