@@ -55,6 +55,7 @@ type Wallet struct {
 	Balance   int64     `gorm:"column:balance"`
 	CreatedAt time.Time `gorm:"column:created_at;autoCreateTime;<-:create"`
 	UpdatedAt time.Time `gorm:"column:updated_at;autoCreateTime;autoUpdateTime"`
+	User      *User     `gorm:"foreignKey:user_id;references:id"`
 }
 
 func (w *Wallet) TableName() string {
@@ -67,6 +68,7 @@ type Address struct {
 	Address   string    `gorm:"column:address"`
 	CreatedAt time.Time `gorm:"column:created_at;autoCreateTime;<-:create"`
 	UpdatedAt time.Time `gorm:"column:updated_at;autoCreateTime;autoUpdateTime"`
+	User      User      `gorm:"foreignKey:user_id;references:id"`
 }
 
 func (a *Address) TableName() string {

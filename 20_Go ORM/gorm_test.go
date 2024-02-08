@@ -1,6 +1,7 @@
 package learn_gorm
 
 import (
+	"fmt"
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 	"gorm.io/driver/postgres"
@@ -513,23 +514,23 @@ func TestSkipAutoCreateUpdate(t *testing.T) {
 }
 func TestUserAndAddresses(t *testing.T) {
 	user := User{
-		ID:       "90",
+		ID:       "91",
 		Password: "rhs",
 		Name: Name{
-			FirstName: "user 90",
+			FirstName: "user 91",
 		},
 		Wallet: Wallet{
-			ID:      "90",
-			UserId:  "90",
+			ID:      "91",
+			UserId:  "91",
 			Balance: 7000000,
 		},
 		Addresses: []Address{
 			{
-				UserId:  "90",
+				UserId:  "91",
 				Address: "jalan A",
 			},
 			{
-				UserId:  "90",
+				UserId:  "91",
 				Address: "jalan B",
 			},
 		},
@@ -547,5 +548,27 @@ func TestTakePreloadJoinOneToMany(t *testing.T) {
 	var user User
 	err := db.Model(&User{}).Preload("Addresses").Joins("Wallet").
 		Take(&user, "users.id = ?", "90").Error
+	assert.Nil(t, err)
+}
+func TestBelongsToAddress(t *testing.T) {
+	fmt.Println("Preload")
+	var addresses []Address
+	err := db.Model(&Address{}).Preload("User").Find(&addresses).Error
+	assert.Nil(t, err)
+
+	fmt.Println("Joins")
+	addresses = []Address{}
+	err = db.Model(&Address{}).Joins("User").Find(&addresses).Error
+	assert.Nil(t, err)
+}
+func TestBelongsToWaller(t *testing.T) {
+	fmt.Println("Preload")
+	var wallets []Wallet
+	err := db.Model(&Wallet{}).Preload("User").Find(&wallets).Error
+	assert.Nil(t, err)
+
+	fmt.Println("Joins")
+	wallets = []Wallet{}
+	err = db.Model(&Wallet{}).Joins("User").Find(&wallets).Error
 	assert.Nil(t, err)
 }
