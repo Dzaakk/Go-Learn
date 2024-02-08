@@ -87,3 +87,16 @@ create table wallets
 );
 select *
 from wallets;
+create table addresses
+(
+    id         serial,
+    user_id    VARCHAR(100) NOT NULL,
+    address    VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    foreign key (user_id) references users (id)
+);
+drop table addresses;
+select *
+from addresses;
