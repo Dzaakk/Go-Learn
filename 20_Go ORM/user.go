@@ -6,14 +6,15 @@ import (
 )
 
 type User struct {
-	ID          string    `gorm:"primary_key;column:id;<-:create"` //create only
-	Password    string    `gorm:"column:password"`
-	Name        Name      `gorm:"embedded"` //create and update
-	CreatedAt   time.Time `gorm:"column:created_at;autoCreateTime;<-:create"`
-	UpdatedAt   time.Time `gorm:"column:updated_at;autoCreateTime;autoUpdateTime"`
-	Information string    `gorm:"-"` //no field on db so it will ignore this
-	Wallet      Wallet    `gorm:"foreignKey:user_id;references:id"`
-	Addresses   []Address `gorm:"foreignKey:user_id;references:id"`
+	ID           string    `gorm:"primary_key;column:id;<-:create"` //create only
+	Password     string    `gorm:"column:password"`
+	Name         Name      `gorm:"embedded"` //create and update
+	CreatedAt    time.Time `gorm:"column:created_at;autoCreateTime;<-:create"`
+	UpdatedAt    time.Time `gorm:"column:updated_at;autoCreateTime;autoUpdateTime"`
+	Information  string    `gorm:"-"` //no field on db so it will ignore this
+	Wallet       Wallet    `gorm:"foreignKey:user_id;references:id"`
+	Addresses    []Address `gorm:"foreignKey:user_id;references:id"`
+	LikeProducts []Product `gorm:"many2many:user_like_product;foreignKey:id;joinForeignKey:user_id;references:id;joinReferences:product_id"`
 }
 
 func (u *User) TableName() string {
@@ -73,4 +74,17 @@ type Address struct {
 
 func (a *Address) TableName() string {
 	return "addresses"
+}
+
+type Product struct {
+	ID           string    `gorm:"primary_key;column:id;autoIncrement"`
+	Name         string    `gorm:"column:name"`
+	Price        int64     `gorm:"column:price"`
+	CreatedAt    time.Time `gorm:"column:created_at;autoCreateTime;<-:create"`
+	UpdatedAt    time.Time `gorm:"column:updated_at;autoCreateTime;autoUpdateTime"`
+	LikedByUsers []User    `gorm:"many2many:user_like_product;foreignKey:id;joinForeignKey:product_id;references:id;joinReferences:user_id"`
+}
+
+func (p *Product) TableName() string {
+	return "products"
 }

@@ -100,3 +100,26 @@ create table addresses
 drop table addresses;
 select *
 from addresses;
+
+create table products
+(
+    id         varchar(100) not null,
+    name       varchar(100) not null,
+    price      bigint       not null,
+    created_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+);
+truncate products;
+drop table products;
+
+create table user_like_product
+(
+    user_id    varchar(100) not null,
+    product_id varchar(100) not null,
+    PRIMARY KEY (user_id, product_id),
+    foreign key (user_id) references users (id),
+    foreign key (product_id) references products (id)
+)
+select * from user_like_product;
+truncate user_like_product;
