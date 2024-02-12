@@ -125,3 +125,6 @@ select * from user_like_product;
 truncate user_like_product;
 
 select * from addresses;
+select * from wallets;
+select count(id)
+from users;
