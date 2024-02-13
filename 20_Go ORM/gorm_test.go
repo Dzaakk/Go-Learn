@@ -750,3 +750,18 @@ func TestContext(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, 27, len(users))
 }
+func BorkeWalletBalance(db *gorm.DB) *gorm.DB {
+	return db.Where("balance = 0")
+}
+func SultanWalletBalance(db *gorm.DB) *gorm.DB {
+	return db.Where("balance > 200000")
+}
+func TestScopes(t *testing.T) {
+	var wallets []Wallet
+	err := db.Scopes(BorkeWalletBalance).Find(&wallets).Error
+	assert.Nil(t, err)
+
+	wallets = []Wallet{}
+	err = db.Scopes(SultanWalletBalance).Find(&wallets).Error
+	assert.Nil(t, err)
+}
