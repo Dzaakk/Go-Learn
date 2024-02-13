@@ -1,6 +1,7 @@
 package learn_gorm
 
 import (
+	"context"
 	"fmt"
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
@@ -740,4 +741,12 @@ func TestGroupByHaving(t *testing.T) {
 		Find(&results).Error
 	assert.Nil(t, err)
 	assert.Equal(t, 0, len(results))
+}
+func TestContext(t *testing.T) {
+	ctx := context.Background()
+
+	var users []User
+	err := db.WithContext(ctx).Find(&users).Error
+	assert.Nil(t, err)
+	assert.Equal(t, 27, len(users))
 }
