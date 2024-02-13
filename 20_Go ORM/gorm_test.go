@@ -12,6 +12,7 @@ import (
 	"os"
 	"strconv"
 	"testing"
+	"time"
 )
 
 func OpenConnection() *gorm.DB {
@@ -31,6 +32,15 @@ func OpenConnection() *gorm.DB {
 	if err != nil {
 		panic(err)
 	}
+
+	sqlDb, err := db.DB()
+	if err != nil {
+		panic(err)
+	}
+	sqlDb.SetMaxOpenConns(100)
+	sqlDb.SetMaxIdleConns(10)
+	sqlDb.SetConnMaxLifetime(10 * time.Minute)
+	sqlDb.SetConnMaxIdleTime(5 * time.Minute)
 
 	return db
 }
