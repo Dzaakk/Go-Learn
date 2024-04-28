@@ -2,10 +2,11 @@ package golearn
 
 import (
 	"context"
-	redis "github.com/redis/go-redis/v9"
-	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
+
+	redis "github.com/redis/go-redis/v9"
+	"github.com/stretchr/testify/assert"
 )
 
 var client = redis.NewClient(&redis.Options{
@@ -40,4 +41,16 @@ func TestString(t *testing.T) {
 	result, err = client.Get(ctx, "name").Result()
 	assert.NotNil(t, err)
 
+}
+
+func TestList(t *testing.T) {
+	client.RPush(ctx, "names", "first name")
+	client.RPush(ctx, "names", "middle name")
+	client.RPush(ctx, "names", "last name")
+
+	assert.Equal(t, "first name", client.LPop(ctx, "names").Val())
+	assert.Equal(t, "middle name", client.LPop(ctx, "names").Val())
+	assert.Equal(t, "last name", client.LPop(ctx, "names").Val())
+
+	client.Del(ctx, "names")
 }
